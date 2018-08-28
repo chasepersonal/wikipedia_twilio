@@ -38,7 +38,6 @@ jobs:
     - run:
         name: deploy to zappa
         command: |
-          . venv/bin/activate
 
           if [ "$CIRCLE_BRANCH" != "master" ]; then export ZAPPA_STAGE=dev; fi
           if [ "$CIRCLE_BRANCH" = "master" ]; then export ZAPPA_STAGE=prod; fi
