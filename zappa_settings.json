@@ -12,7 +12,6 @@
             "requirements.txt",
             "zappa_settings.json"
         ],
-        "profile_name": "Admin",
         "project_name": "wikipedia-twilio",
         "runtime": "python3.6",
         "s3_bucket": "wikipedia-twilio",
