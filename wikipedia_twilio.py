@@ -1,5 +1,7 @@
+from difflib import get_close_matches
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
+import keyword
 import wikipedia
 
 app = Flask(__name__)
@@ -24,7 +26,7 @@ def sms():
 def get_reply(message):
 
     # Turn message into lowercase to allow lowercase entries
-    message = message.lower().split()
+    message = get_close_matches(message.lower().split(), keyword.kwlist)
 
     # Retrieve url for wikipedia page if no exists
     # If not , return a string stating otherwise
@@ -32,7 +34,7 @@ def get_reply(message):
         page = wikipedia.page(message)
         get_url = page.url
 
-        answer = "A Wikipedia article was found matching your entry: " + get_url
+        answer = "A Wikipedia article was found matching your entry. Or at least one close to it:" + get_url
     except:
         answer = "No article found matching your entry. I'm sorry!"
 
