@@ -1,7 +1,7 @@
 {
     "common": {
         "app_function": "wikipedia_twilio.app",
-        "aws_region": "us-east-1",
+        "aws_region": "us-west-1",
         "exclude": [
             "__pycache__",
             ".git/*",
