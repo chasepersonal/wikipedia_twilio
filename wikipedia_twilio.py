@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route('/sms', methods=['POST'])
 def sms():
 
+    # Recieves body of request
     message_body = request.form['Body']
 
     # Create a Twilio response object to be able to send the answer back
