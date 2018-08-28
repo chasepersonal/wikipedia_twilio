@@ -33,28 +33,28 @@ jobs:
             python -m pytest -v
 
   deploy:
-      docker:
-      - image: buildpack-deps:trusty
-      steps:
-      - checkout
-      - run:
-          # set ZAPPA_STAGE env var depending on current branch
-          if [ "$CIRCLE_BRANCH" != "master" ]; then export ZAPPA_STAGE=dev; fi
-          if [ "$CIRCLE_BRANCH" = "master" ]; then export ZAPPA_STAGE=prod; fi
+    docker:
+    - image: buildpack-deps:trusty
+    steps:
+    - checkout
+    - run:
+        # set ZAPPA_STAGE env var depending on current branch
+        if [ "$CIRCLE_BRANCH" != "master" ]; then export ZAPPA_STAGE=dev; fi
+        if [ "$CIRCLE_BRANCH" = "master" ]; then export ZAPPA_STAGE=prod; fi
 
-          # test if .zip file can be created
-          zappa package $ZAPPA_STAGE
+        # test if .zip file can be created
+        zappa package $ZAPPA_STAGE
 
-          # set aws credentials from env vars set in web interface
-          mkdir -p ~/.aws
-          echo "[Admin]" >> ~/.aws/credentials
-          echo "aws_access_key_id = "$AWS_ACCESS_KEY_ID >> ~/.aws/credentials
-          echo "aws_secret_access_key = "$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
+        # set aws credentials from env vars set in web interface
+        mkdir -p ~/.aws
+        echo "[Admin]" >> ~/.aws/credentials
+        echo "aws_access_key_id = "$AWS_ACCESS_KEY_ID >> ~/.aws/credentials
+        echo "aws_secret_access_key = "$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
 
-          # try to update, if the command fails do the initial deploy
-          zappa update $ZAPPA_STAGE || zappa deploy $ZAPPA_STAGE;
+        # try to update, if the command fails do the initial deploy
+        zappa update $ZAPPA_STAGE || zappa deploy $ZAPPA_STAGE;
 
-  workflows:
+workflows:
     version: 2
     build-deploy:
       jobs:
