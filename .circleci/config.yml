@@ -36,19 +36,19 @@ jobs:
             python -m pytest -v
 
       - deploy:
-           name: deploy to zappa
-            command: |
-               . venv/bin/activate
+          name: deploy to zappa
+          command: |
+            . venv/bin/activate
 
-              if [ "$CIRCLE_BRANCH" != "master" ]; then export ZAPPA_STAGE=dev; fi
-              if [ "$CIRCLE_BRANCH" = "master" ]; then export ZAPPA_STAGE=prod; fi
+            if [ "$CIRCLE_BRANCH" != "master" ]; then export ZAPPA_STAGE=dev; fi
+            if [ "$CIRCLE_BRANCH" = "master" ]; then export ZAPPA_STAGE=prod; fi
 
-              zappa package $ZAPPA_STAGE
+            zappa package $ZAPPA_STAGE
 
-              mkdir -p ~/.aws
+            mkdir -p ~/.aws
 
-              echo -e "[mislavcimpersak]" >> ~/.aws/credentials
-              echo -e "aws_access_key_id = "$AWS_ACCESS_KEY_ID >> ~/.aws/credentials
-              echo -e "aws_secret_access_key = "$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
+            echo -e "[mislavcimpersak]" >> ~/.aws/credentials
+            echo -e "aws_access_key_id = "$AWS_ACCESS_KEY_ID >> ~/.aws/credentials
+            echo -e "aws_secret_access_key = "$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
 
-              zappa update $ZAPPA_STAGE || zappa deploy $ZAPPA_STAGE;
+            zappa update $ZAPPA_STAGE || zappa deploy $ZAPPA_STAGE;
