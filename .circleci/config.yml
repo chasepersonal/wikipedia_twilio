@@ -30,4 +30,4 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python -m test -v
+            python test_wikipedia_twilio.py -v
