@@ -26,7 +26,7 @@ def sms():
 def get_reply(message):
 
     # Turn message into lowercase to allow lowercase entries
-    message = get_close_matches(message.lower().strip(), keyword.kwlist)
+    message = get_close_matches(message.lower().split(), keyword.kwlist)
 
     # Retrieve url for wikipedia page if no exists
     # If not , return a string stating otherwise
